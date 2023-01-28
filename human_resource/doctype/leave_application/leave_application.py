@@ -5,7 +5,8 @@
 # import frappe
 from frappe.model.document import Document
 import frappe.utils
-from frappe import _
+from frappe import _, msgprint
+
 
 class LeaveApplication(Document):
 	def validate(self):
@@ -84,6 +85,7 @@ class LeaveApplication(Document):
 
 @frappe.whitelist()
 def get_total_leave(employee, leave_type, from_date, to_date):
+	#msgprint(employee, leave_type, from_date, to_date)
 	if employee and from_date and to_date and leave_type:
 		leave_allocated = frappe.db.sql(""" select * from `tabLeave Allocation` 
 		where employee = %s and leave_type = %s and from_date <= %s and to_date >= %s """,

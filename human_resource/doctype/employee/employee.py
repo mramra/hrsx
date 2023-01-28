@@ -23,7 +23,7 @@ class Employee(Document):
 
 	def add_full_name(self):
 		if self.first_name and self.middle_name and self.last_name:
-			self.full_name = self.first_name + " " + self.middle_name + " " + self.last_name
+			self.ful_name = self.first_name + " " + self.middle_name + " " + self.last_name
 		else:
 			frappe.throw("Please, add all name component")
 
