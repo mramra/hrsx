@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "field:employee",
  "creation": "2023-02-03 13:14:46.354139",
  "default_view": "List",
  "doctype": "DocType",
@@ -23,7 +24,8 @@
    "fieldname": "employee",
    "fieldtype": "Link",
    "label": "Employee",
-   "options": "Employee"
+   "options": "Employee",
+   "unique": 1
   },
   {
    "fetch_from": "employee.ful_name",
@@ -86,10 +88,11 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-02-04 22:56:22.698805",
+ "modified": "2023-02-05 01:51:52.806343",
  "modified_by": "Administrator",
  "module": "Human Resource",
  "name": "Attendance",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {

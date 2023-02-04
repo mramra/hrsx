@@ -65,3 +65,19 @@ class Attendance(Document):
 			self.status = 'Present'
 
 
+#@frappe.whitelist(allow_guest=True)
+@frappe.whitelist()
+def create_attendance(check_in,check_out,employee):
+	#leave_allocated = frappe.db.sql(""" select * from `tabLeave Allocation`  """,(), as_dict=1)
+	frappe.db.sql(""" INSERT INTO tabAttendance (check_in,check_out,employee) VALUES (%s,%s,%s)""",(check_in,check_out,employee))
+	frappe.db.commit
+
+	#return leave_allocated
+# 		# start time and end time
+# 		start_time = datetime.strptime(check_in , "%H:%M:%S")
+# 		end_time = datetime.strptime(check_out , "%H:%M:%S")
+# 		delta = end_time - start_time
+# 		sec = delta.total_seconds()
+# 		hours = sec / (60 * 60)
+# 		return hours
+

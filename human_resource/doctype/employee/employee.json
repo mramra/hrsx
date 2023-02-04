@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "EMP.####",
+ "autoname": "field:user",
  "creation": "2023-01-14 16:46:44.351126",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -107,17 +107,18 @@
    "fieldname": "user",
    "fieldtype": "Link",
    "label": "user",
-   "options": "User"
+   "options": "User",
+   "unique": 1
   }
  ],
  "image_field": "image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-02-03 23:55:18.068872",
+ "modified": "2023-02-05 01:43:05.158738",
  "modified_by": "Administrator",
  "module": "Human Resource",
  "name": "Employee",
- "naming_rule": "Expression (old style)",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
