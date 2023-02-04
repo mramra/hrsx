@@ -19,9 +19,11 @@ class LeaveApplication(Document):
 	def on_submit(self):
 		self.update_leave_allocated()
 
+	#1- When Cancel  Leave Application  update Value  Leave Balance Before Application   from Leave Allocation
 	def on_cancel(self):
 		self.refund_cancel_leave()
 
+	#2- Add Validate when create or save Leave Application  if from date value  after to date value
 	def set_total_leave_days(self):
 		if self.to_date and self.from_date:
 			total_leave_day = frappe.utils.date_diff(self.to_date, self.from_date)
@@ -65,7 +67,7 @@ class LeaveApplication(Document):
 					  (new_leaves_allocated, self.employee, self.leave_type, self.from_date, self.to_date), as_dict=1)
 		frappe.db.commit
 
-
+	#4- Add field “Max Continuous Days Allowed”  in Leave Type and add validate on leave application If Total leave days more than Max Continuous Days Allowed
 	def check_continuous_leave(self):
 		max_continuous_leave = frappe.db.sql(""" select max_continuous_days_allowed from `tabLeave Type` 
 					where name = %s """,	(self.leave_type), as_dict=1)
@@ -85,7 +87,7 @@ class LeaveApplication(Document):
 
 @frappe.whitelist()
 def get_total_leave(employee, leave_type, from_date, to_date):
-	#msgprint(employee, leave_type, from_date, to_date)
+	#frappe.throw(employee, leave_type, from_date, to_date)
 	if employee and from_date and to_date and leave_type:
 		leave_allocated = frappe.db.sql(""" select * from `tabLeave Allocation` 
 		where employee = %s and leave_type = %s and from_date <= %s and to_date >= %s """,

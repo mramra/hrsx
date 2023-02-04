@@ -1,0 +1,100 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-02-03 13:14:46.354139",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "employee",
+  "employee_name",
+  "department",
+  "attendance_date",
+  "status",
+  "check_in",
+  "check_out",
+  "work_hours",
+  "late_hours"
+ ],
+ "fields": [
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Employee",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "employee.ful_name",
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "label": "Employee Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "employee.department",
+   "fieldname": "department",
+   "fieldtype": "Data",
+   "label": "Department",
+   "read_only": 1
+  },
+  {
+   "fieldname": "attendance_date",
+   "fieldtype": "Date",
+   "label": "Attendance Date"
+  },
+  {
+   "default": "Present",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Present\nAbsent"
+  },
+  {
+   "fieldname": "check_in",
+   "fieldtype": "Time",
+   "label": "Check In"
+  },
+  {
+   "fieldname": "check_out",
+   "fieldtype": "Time",
+   "label": "Check Out"
+  },
+  {
+   "fieldname": "work_hours",
+   "fieldtype": "Float",
+   "label": "Work Hours",
+   "read_only": 1
+  },
+  {
+   "fieldname": "late_hours",
+   "fieldtype": "Float",
+   "label": "Late Hours",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-02-03 13:22:23.979802",
+ "modified_by": "Administrator",
+ "module": "Human Resource",
+ "name": "Attendance",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

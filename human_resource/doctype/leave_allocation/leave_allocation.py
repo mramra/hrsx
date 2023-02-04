@@ -11,8 +11,9 @@ from frappe import _
 class LeaveAllocation(Document):
 
 	def validate(self):
-		self.leave_allocation_validation()
-
+		#self.leave_allocation_validation()
+		pass
+	# 3- Add Validate when create or save Leave Allocation  if from date value  after to date value and if already  have allocation to same Dates , Employee and leave Type
 	def leave_allocation_validation(self):
 		if self.employee and self.from_date and self.to_date and self.leave_type:
 			leave_allocated = frappe.db.sql(""" select * from `tabLeave Allocation` 

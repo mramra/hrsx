@@ -19,23 +19,30 @@
   "date_of_joining",
   "department",
   "mobile",
-  "employee_education"
+  "employee_education",
+  "user"
  ],
  "fields": [
   {
    "fieldname": "first_name",
    "fieldtype": "Data",
-   "label": "First Name"
+   "in_list_view": 1,
+   "label": "First Name",
+   "reqd": 1
   },
   {
    "fieldname": "middle_name",
    "fieldtype": "Data",
-   "label": "Middle Name"
+   "in_list_view": 1,
+   "label": "Middle Name",
+   "reqd": 1
   },
   {
    "fieldname": "last_name",
    "fieldtype": "Data",
-   "label": "Last Name"
+   "in_list_view": 1,
+   "label": "Last Name",
+   "reqd": 1
   },
   {
    "fieldname": "ful_name",
@@ -62,7 +69,9 @@
   {
    "fieldname": "date_of_birth",
    "fieldtype": "Date",
-   "label": "Date of Birth"
+   "in_list_view": 1,
+   "label": "Date of Birth",
+   "reqd": 1
   },
   {
    "fieldname": "date_of_joining",
@@ -91,13 +100,20 @@
    "fieldname": "mobile",
    "fieldtype": "Data",
    "label": "Mobile",
-   "length": 10
+   "length": 10,
+   "reqd": 1
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "label": "user",
+   "options": "User"
   }
  ],
  "image_field": "image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-01-28 01:32:15.381672",
+ "modified": "2023-02-03 23:55:18.068872",
  "modified_by": "Administrator",
  "module": "Human Resource",
  "name": "Employee",
@@ -113,6 +129,18 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User",
    "share": 1,
    "write": 1
   }

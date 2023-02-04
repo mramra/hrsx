@@ -14,8 +14,9 @@ frappe.ui.form.on('Leave Application', {
             },
             callback: (r) =>{
                 //console.log(r.massage);
-                frm.doc.leave_balance_before_application = r.massage;
-            }
+                frm.doc.leave_balance_before_application = r.message;
+                frm.refresh()
+            },
 
     })
     },

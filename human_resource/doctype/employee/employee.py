@@ -7,6 +7,7 @@ import frappe.utils
 
 
 class Employee(Document):
+
 	def validate(self):
 		self.cal_age()
 		self.check_mobile()
