@@ -1,10 +1,9 @@
 # Copyright (c) 2023, hr and contributors
 # For license information, please see license.txt
-from datetime import datetime, timedelta,time
-
+from datetime import datetime, timedelta
 import frappe
 from frappe.model.document import Document
-from frappe.utils import date_diff, time_diff_in_hours, get_time
+from frappe.utils import time_diff_in_hours
 
 
 class Attendance(Document):
