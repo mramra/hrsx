@@ -8,29 +8,61 @@ from frappe.utils import date_diff, time_diff_in_hours, get_time
 
 
 class Attendance(Document):
-	start_time = frappe.db.sql(""" select value from `tabSingles` where doctype = 'Attendance Settings' AND field='start_time' """,as_dict=1)[0]['value']
-	end_time = frappe.db.sql(""" select value from `tabSingles` where doctype = 'Attendance Settings' AND field='end_time' """,as_dict=1)[0]['value']
-	working_hours_threshold_for_absent = frappe.db.sql(""" select value from `tabSingles` where doctype = 'Attendance Settings' AND field='working_hours_threshold_for_absent' """,as_dict=1)[0]['value']
-	late_entry_grace_period = frappe.db.sql(""" select value from `tabSingles` where doctype = 'Attendance Settings' AND field='late_entry_grace_period' """,as_dict=1)[0]['value']
-	early_exit_grace_period = frappe.db.sql(""" select value from `tabSingles` where doctype = 'Attendance Settings' AND field='early_exit_grace_period' """,as_dict=1)[0]['value']
+	start_time = frappe.db.get_single_value("Attendance Settings", "start_time")
+	end_time = frappe.db.get_single_value("Attendance Settings", "end_time")
+	working_hours_threshold_for_absent = frappe.db.get_single_value("Attendance Settings", "working_hours_threshold_for_absent")
+	late_entry_grace_period = frappe.db.get_single_value("Attendance Settings", "late_entry_grace_period")
+	early_exit_grace_period = frappe.db.get_single_value("Attendance Settings", "early_exit_grace_period")
 
 	def validate(self):
-		# Work Hours = Check Out - Check In
 		self.add_value_Work_Hours()
-		# Late Hours =  diff between (Check In , Start Time) and (Check Out , End Time )
-		self.add_value_Late_Hours()
 
 	def add_value_Work_Hours(self):
-		x=timedelta(minutes=float(self.late_entry_grace_period))
+		StartT = self.start_time + timedelta(minutes=self.late_entry_grace_period)
+		EndT = self.end_time - timedelta(minutes=self.early_exit_grace_period)
+		check_in = datetime.strptime(self.check_in, "%H:%M:%S")
+		check_out = datetime.strptime(self.check_out, "%H:%M:%S")
 
-		y=get_time(self.check_in)
-		#start = datetime.strptime(x, "%H:%M:%S")
-		#end = datetime.strptime(y, "%H:%M:%S")
-		#z=x+y
-		frappe.msgprint(str(x))
+		CheckStart = datetime.strptime(str(StartT), "%H:%M:%S")
+		CheckEnd = datetime.strptime(str(EndT), "%H:%M:%S")
 
-		#	self.work_hours = time_diff_in_hours(self.check_out, self.check_in)
-	def add_value_Late_Hours(self):
+		CheckStartWork = datetime.strptime(str(self.start_time), "%H:%M:%S")
+		CheckEndWork = datetime.strptime(str(self.end_time), "%H:%M:%S")
 
-		self.late_hours=time_diff_in_hours(self.check_out ,self.check_in)
+		work = time_diff_in_hours(CheckEndWork, CheckStartWork)
+
+		if (check_in < CheckStartWork or check_out > CheckEndWork):
+			check_in = CheckStartWork
+
+		if (check_in >= CheckStartWork and check_in <= CheckStart and check_out <= CheckEndWork and check_out >= CheckEnd):
+			check_in = CheckStartWork
+			check_out = CheckEndWork
+			work1 = time_diff_in_hours(check_out, check_in)
+			self.work_hours = work1
+			self.late_hours = work - work1
+
+		elif check_in >= CheckStartWork and check_in >= CheckStart:
+			check_in = check_in - timedelta(minutes=self.late_entry_grace_period)
+			check_out = check_out + timedelta(minutes=self.early_exit_grace_period)
+			work1 = time_diff_in_hours(check_out, check_in)
+			self.work_hours = work1
+			self.late_hours = work - work1
+		elif check_out <= CheckEndWork and check_out <= CheckEnd:
+			check_in = check_in - timedelta(minutes=self.late_entry_grace_period)
+			check_out = check_out + timedelta(minutes=self.early_exit_grace_period)
+			work1 = time_diff_in_hours(check_out, check_in)
+			self.work_hours = work1
+			self.late_hours = work - work1
+		else:
+			check_in = check_in - timedelta(minutes=self.late_entry_grace_period)
+			check_out = check_out + timedelta(minutes=self.early_exit_grace_period)
+			work1 = time_diff_in_hours(check_out, check_in)
+			self.work_hours = work1
+			self.late_hours = work - work1
+
+		if self.work_hours <= self.working_hours_threshold_for_absent:
+			self.status = 'Absent'
+		else:
+			self.status = 'Present'
+
 
