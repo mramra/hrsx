@@ -14,7 +14,7 @@ class Attendance(Document):
 	late_entry_grace_period = frappe.db.get_single_value("Attendance Settings", "late_entry_grace_period")
 	early_exit_grace_period = frappe.db.get_single_value("Attendance Settings", "early_exit_grace_period")
 
-	def validate(self):
+	def on_submit(self):
 		self.add_value_Work_Hours()
 
 	def add_value_Work_Hours(self):
